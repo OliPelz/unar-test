@@ -1,0 +1,8 @@
+
+UNRAR 5.20 beta 1 freeware      Copyright (c) 1993-2014 Alexander Roshal
+
+
+Testing archive testrun-files/good/good.rar
+
+Testing     gpl-3.0.txt                                                   99%  OK 
+All OK
