@@ -1,5 +1,13 @@
-# unar-test
-convenient automatic multi-archive testing made easy
+# unrar-tools
+convenient processing of multiple rar files
+
+this toolset provides convenient methods for batch-processing big
+amount of rar files in the filesystem 
+this includes:
+
+* automatic multi-archive testing made easy
+  given a folder, this tool will recursively test every available rar file
+  if it is errorfree (without crc errors)
 
 rar testfiles i use in my unit tests come from
 http://www.philipp-winterberg.com/software/rar_faq_corrupted_damaged_broken_partial_files.php

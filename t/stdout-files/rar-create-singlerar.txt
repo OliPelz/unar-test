@@ -1,0 +1,10 @@
+
+RAR 5.21   Copyright (c) 1993-2015 Alexander Roshal   15 Feb 2015
+Trial version             Type RAR -? for help
+
+Evaluation copy. Please register.
+
+Creating archive myFile.rar
+
+Adding    myFile.bin                                                     100%  OK 
+Done

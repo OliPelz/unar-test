@@ -1,0 +1,61 @@
+
+RAR 5.21   Copyright (c) 1993-2015 Alexander Roshal   15 Feb 2015
+Trial version             Type RAR -? for help
+
+Evaluation copy. Please register.
+
+Creating archive our-multirarfile.rar
+
+Adding    bla.dd                                                         100%    
+Calculating the checksum         
+
+Creating archive our-multirarfile.part02.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part03.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part04.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part05.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part06.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part07.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part08.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part09.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part10.rar
+
+...       bla.dd                                                             
+Calculating the checksum         
+
+Creating archive our-multirarfile.part11.rar
+
+...       bla.dd                                                           OK 
+Calculating the checksum         
+Done
