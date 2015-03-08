@@ -48,6 +48,11 @@ my %subfolder_hash = (
   "password" => "password/",
   "password_deep" => "password_deep/16/17/18/19/20/"
 );
+#first test we are using the right unrar version!
+#for example tests fail/script does not work when using
+#unrar v4 because the output is different
+my $unrarVersion = `unrar `;
+ok($unrarVersion =~ /UNRAR 5.2/, 'testing if correct unrar version 5 can be found in path');
 
 # unit test object methods from UnarChecker module
 
@@ -178,7 +183,7 @@ ok((not -s "/tmp/test2/reports/overview/encrypted.txt"), "encrypted file must be
 ok((not -s "/tmp/test2/reports/overview/parts_missing.txt"), "parts_missing file must be empty" );
 
 my $runB = read_file("/tmp/test2/reports/overview/run.txt");
-ok($runB =~ "testrun-files/good_deep/1/2/3/4/5/good.rar.*stdout.*stderr\tyes", "run file contains our file");
+ok($runB = "testrun-files/good_deep/1/2/3/4/5/good.rar.*stdout.*stderr\tyes", "run file contains our file");
 my $visitedB = read_file("/tmp/test2/reports/overview/visited.txt");
 ok($visitedB =~ "testrun-files/good_deep/1/2/3/4/5/good.rar", "run file contains our file");
 my $sucessB = read_file("/tmp/test2/reports/overview/success.txt");

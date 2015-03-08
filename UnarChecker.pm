@@ -8,6 +8,7 @@ use File::Temp qw/tempfile/;
 use Data::Dumper;
 use DateTime;
 use File::Basename;
+use String::ShellQuote;
 
 
 sub new {
@@ -52,7 +53,7 @@ sub getAllRarFilesInPath {
 	my @files = File::Find::Rule->file()
 	                            ->name(qr/.*\.rar$/ )
 	                            ->in( $directory );
-	for my $file_name (@files) {
+       foreach my $file_name (sort @files) {
 		if($file_name =~ /\.rar$/ && $file_name !~ /\.part\d+\.rar$/) {
 			$hshRef{"rar_single"}{$file_name} = $self->{'_id'}++;
 		}
@@ -71,10 +72,11 @@ sub test {
 	# set the name of the directory you want to sort all archives by name in it
 	# TODO: my $topLevelDir = $ARGV[3] || basename(dirname($directory));
 	$self->{'_rarFiles'} = $self->getAllRarFilesInPath($directory);
+        my $totalRarFiles = (scalar keys %{$self->{'_rarFiles'}{"rar_single"}}) + (scalar keys %{$self->{'_rarFiles'}{"rar_multi"}});
 	
 	#Dumper(%file_obj);
 	# unrar test , do not query for passwords
-	my $unrar_cmd = "unrar t -p- %s 1> %s 2> %s";
+	my $unrar_cmd = "unrar t -p- '%s' 1> '%s' 2> '%s'";
 	# prepare the output folder structure
 	my $cmd = "mkdir -p ".($self->{"_outputDir"})."/reports/single/";
 	`$cmd`;
@@ -101,12 +103,15 @@ sub test {
 	print $OV_RUN "# testing following list of rar files\n";
 	print $OV_RUN "# Format: Filename<tab>Rar stdout file<tab>Rar stderr file<tab>Successful extraction: Yes/No<newline>\n";
 	# the actual test
+        my $cnt = 0;
 	foreach my $type (sort keys $self->{'_rarFiles'}) {
 		my %archives = %{$self->{'_rarFiles'}{$type}};
 		foreach my $archive (sort keys %archives) { 
 			next if(defined($self->{_visited}{$archive}));
 			
 			print $OV_RUN $archive."\t";
+                       # printing to stdout for showing progress, TODO: this should go into a verbose flag
+                       print STDOUT ++$cnt." / ".$totalRarFiles." : ".$archive."\n";
 			
 			my $ts = time;
 			my $stdoutFile = $self->{"_outputDir"}."/reports/single/".basename($archive).".".$ts.".stdout";
@@ -161,8 +166,10 @@ sub parseRAROutputFile {
 	my $stderrFile = shift;
 	my $FILE_STDOUT_HANDLER;
 	my $FILE_STDERR_HANDLER;
-	open($FILE_STDOUT_HANDLER, "<", $stdoutFile);
-	open($FILE_STDERR_HANDLER, "<", $stderrFile);
+        #$stdoutFile =~ /\s/\\ /g;
+	#$stderrFile =~ /\s/\\ /g;
+	open($FILE_STDOUT_HANDLER, "<", "$stdoutFile");
+	open($FILE_STDERR_HANDLER, "<", "$stderrFile");
 	
 	my %result = (
 	    "success" => 1,
@@ -171,6 +178,7 @@ sub parseRAROutputFile {
 	);
 	my $line;
 	#Todo : search only in last two lines
+
 	while($line = <$FILE_STDERR_HANDLER>) {
 		$line =~ s/\n+//g;
 		if($line=~ /^Cannot find volume/) {
